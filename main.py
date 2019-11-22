@@ -22,16 +22,16 @@ parser.add_argument(
     required=True
 )
 parser.add_argument(
-    '-x',
-    '--new_x',
-    dest='x',
+    '-w',
+    '--new_w',
+    dest='w',
     help='The new x images size',
     required=True
 )
 parser.add_argument(
-    '-y',
-    '--new_y',
-    dest='y',
+    '-hh',
+    '--new_h',
+    dest='h',
     help='The new y images size',
     required=True
 )
@@ -42,7 +42,34 @@ parser.add_argument(
     help='If True, it will save the resized image and a drawed image with the boxes in the images',
     default=0
 )
-
+parser.add_argument(
+    '-c',
+    '--do_crop',
+    dest='do_crop',
+    help='If True, it will crop',
+    default=0
+)
+parser.add_argument(
+    '-sc',
+    '--do_sub_crop',
+    dest='do_sub_crop',
+    help='If True, it will sub-crop',
+    default=0
+)
+# parser.add_argument(
+#     '-z',
+#     '--out_size',
+#     dest='out_size',
+#     help='Final cropped Output Size',
+#     default=(1664,1664)
+# )
+# parser.add_argument(
+#     '-m',
+#     '--margins',
+#     dest='margins',
+#     help='...',
+#     default=None
+# )
 IMAGE_FORMATS = ('.jpeg', '.JPEG', '.png', '.PNG', '.jpg', '.JPG')
 
 args = parser.parse_args()
@@ -60,4 +87,4 @@ for root, _, files in os.walk(args.dataset_path):
         for file in files:
             if file.endswith(IMAGE_FORMATS):
                 file_path = os.path.join(root, file)
-                process_image(file_path, output_path, int(args.x),int(args.y), args.save_box_images)
+                process_image(file_path, output_path, int(args.w),int(args.h), args.save_box_images,args.do_crop,args.do_sub_crop)
