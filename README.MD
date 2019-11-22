@@ -1,3 +1,8 @@
+This fork adds support for subcropping big images to train for small objects
+That is - obtain cuttings from images of larger dimensions, retaining the annotations
+Image size at inference should match - mainly addressing lack of dataset resources
+
+
 # Resize-pascal-voc
 It's a package for resizing ALL your dataset images (into local folder) and changing the pascal_VOC coodinates in your `.xml` files.
 
@@ -7,7 +12,7 @@ It's a package for resizing ALL your dataset images (into local folder) and chan
 - [Warnings](#Warnings)
 - [Install requirements](#Install-requirements)
 - [Usage](#Usage)
-- [Example](E#xample)
+- [Example](#Example)
 - [Folder structure example](#Folder-structure-example)
 - [Results](#Results)
     - [Original Image](#Original-Image)
@@ -43,7 +48,7 @@ python3 main.py -p /home/italojs/Pictures/dataset --output ./output --new_x 150 
 
 ## Folder structure example
 
-Look this *randon* folder structure with ALL my dataset
+Look this *random* folder structure with ALL my dataset
 ```
 dataset
 ├── IMG_20181109_165212.jpg
@@ -242,7 +247,7 @@ Here is a resized image (200x200), but with the boundies box drawed:
 
 ![box_image](images_example/boxed_IMG_20181109_165212.jpg)
 
-## Parameters
+## Parameters -- updated for subcropping
 To know more about parameters use `python main.py -h`:
 ```
 usage: main.py [-h] -p DATASET_PATH -o OUTPUT_PATH -x X -y Y
@@ -254,9 +259,17 @@ optional arguments:
                         Path to dataset data ?(image and annotations).
   -o OUTPUT_PATH, --output OUTPUT_PATH
                         Path that will be saved the resized dataset
-  -x X, --new_x X       The new x images size
-  -y Y, --new_y Y       The new y images size
+  -w W, --new_w W       The new image width
+  -h H, --new_h H       The new image height 
   -s SAVE_BOX_IMAGES, --save_box_images SAVE_BOX_IMAGES
                         If True, it will save the resized image and a drawed
                         image with the boxes in the images
+  -c CROP, --do_crop CROP #temporarily unavailable
+                        If True, it will crop an image to the new size 
+                        with default margins [.2, 0, .15, .15]
+  -sc SUB_CROP, --dp_sub_crop SUB_CROP
+                        If true, it will generate crops of dimensions (new_w x new_h).
+                        A number of crops (n) would fit in original dimension {w|h}.
+                        Any remaining borders of dims [new_{dim} * n]/2 will be ignored.
+                        Only sub_crops with objects will be kept.
 ```
