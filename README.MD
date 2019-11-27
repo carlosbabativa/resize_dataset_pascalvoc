@@ -247,6 +247,40 @@ Here is a resized image (200x200), but with the boundies box drawed:
 
 ![box_image](images_example/boxed_IMG_20181109_165212.jpg)
 
+
+## CUSTOMISATIONS:  This fork adds the following custom functions when run from the darkflow fork in this profile
+##                  This fork of resize_dataset_pascalvoc has been added as a submodule of darkflow
+It is required that the datasets are in pascalvoc format (using LabelImg, for example) and that datasets are saved in the following structure 
+  darkflow
+  |--darkflow/data
+    |--{name_yout_dataset_1}
+       |--data_train
+          |--img_1.jpg
+          |--img_1.xml
+          ...
+    |--{name_yout_dataset_2}
+       |--data_train
+          |--img_1.jpg
+          |--img_1.xml
+          ...
+          [and so on]
+  - []  Resize images
+  - []  Crop images
+  - [x] Sub-crop images (crops dataset into smaller samples, translating box coordinates within XML)
+        In an attempt of training Yolo for small object detection
+  - [x] Run functions from this repo on dataset within darkflow (this fork) which is typically at 'darkflow/data'
+  - []  CLI Progress bar
+
+##
+
+If running within darkflow fork, you can run 
+```
+python resize_dataset_pascalvoc/main.py -p {yout_dataset_folder_name} --output {your_dataset_output_folder} --new_w 480 --new_h 640 --save_box_images 1 --do_sub_crop 1
+```
+Note that the dataset folder name does not need to be a path to darkflow/data/{dataset_name}, instead, only the name of the dataset is required
+Same requirements apply for output dataset, which will appear alongside all other datasets
+
+
 ## Parameters -- updated for subcropping
 To know more about parameters use `python main.py -h`:
 ```
@@ -267,7 +301,7 @@ optional arguments:
   -c CROP, --do_crop CROP #temporarily unavailable
                         If True, it will crop an image to the new size 
                         with default margins [.2, 0, .15, .15]
-  -sc SUB_CROP, --dp_sub_crop SUB_CROP
+  -sc SUB_CROP, --do_sub_crop SUB_CROP
                         If true, it will generate crops of dimensions (new_w x new_h).
                         A number of crops (n) would fit in original dimension {w|h}.
                         Any remaining borders of dims [new_{dim} * n]/2 will be ignored.

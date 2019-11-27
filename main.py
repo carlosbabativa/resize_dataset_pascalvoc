@@ -3,7 +3,13 @@ import argparse
 from image import process_image
 from utils import create_path, add_end_slash
 from optparse import OptionParser
+###
+#Work within the data directory
+###
+os.chdir('data')
 
+
+#pass arguments
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
@@ -74,6 +80,7 @@ IMAGE_FORMATS = ('.jpeg', '.JPEG', '.png', '.PNG', '.jpg', '.JPG')
 
 args = parser.parse_args()
 
+args.dataset_path += '/data_train'
 create_path(args.output_path)
 create_path(''.join([args.output_path, '/boxes_images']))
 
