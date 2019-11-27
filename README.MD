@@ -253,7 +253,8 @@ Here is a resized image (200x200), but with the boundies box drawed:
 ##
 
 ## CUSTOMISATIONS:  This fork adds the following custom functions when run from the darkflow fork in this profile
-##                  This fork of resize_dataset_pascalvoc has been added as a submodule of darkflow
+
+This fork of resize_dataset_pascalvoc has been added as a submodule of darkflow
 It is required that the datasets are in pascalvoc format (using LabelImg, for example) and that datasets are saved in the following structure 
 
 ```
