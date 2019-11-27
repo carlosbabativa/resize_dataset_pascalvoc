@@ -14,12 +14,12 @@ darkflow
 ├── darkflow/data
 │   ├── {name_yout_dataset_1}
 |       ├── data_train
-|           ├── img_1.jpg
-|           ├── img_1.xml
+|           ├── {your_img_1}.jpg
+|           ├── {your_img_1}.xml
 │   ├── {name_yout_dataset_2}
 |       ├── data_train
-|           ├── img_1.jpg
-|           ├── img_1.xml
+|           ├── {your_img_1}.jpg
+|           ├── {your_img_1}.xml
 |       ... and so on
 ```
 
