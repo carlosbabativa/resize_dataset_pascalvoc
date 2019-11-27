@@ -1,13 +1,13 @@
 ## This fork adds support for subcropping big images to train for small objects
 
-That is - obtain cuttings from images of larger dimensions, retaining the annotations
-Image size at inference should match - mainly addressing lack of dataset resources
+That is - obtain cuttings from images of larger dimensions, retaining the annotations  
+Image size at inference should match - mainly addressing lack of dataset resources  
 
 
 ## CUSTOMISATIONS:  This fork adds the following custom functions when run from the darkflow fork in this profile
 
-This fork of resize_dataset_pascalvoc has been added as a submodule of darkflow
-It is required that the datasets are in pascalvoc format (using LabelImg, for example) and that datasets are saved in the following structure 
+This fork of resize_dataset_pascalvoc has been added as a submodule of darkflow  
+It is required that the datasets are in pascalvoc format (using LabelImg, for example) and that datasets are saved in the following structure  
 
 ```
 darkflow
