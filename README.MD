@@ -253,19 +253,17 @@ Here is a resized image (200x200), but with the boundies box drawed:
 It is required that the datasets are in pascalvoc format (using LabelImg, for example) and that datasets are saved in the following structure 
 
 ```
-  darkflow
-  |--darkflow/data
-    |--{name_yout_dataset_1}
-       |--data_train
-          |--img_1.jpg
-          |--img_1.xml
-          ...
-    |--{name_yout_dataset_2}
-       |--data_train
-          |--img_1.jpg
-          |--img_1.xml
-          ...
-          [and so on]
+darkflow
+├── darkflow/data
+│   ├── {name_yout_dataset_1}
+|       ├── data_train
+|           ├── img_1.jpg
+|           ├── img_1.xml
+│   ├── {name_yout_dataset_2}
+|       ├── data_train
+|           ├── img_1.jpg
+|           ├── img_1.xml
+|       ... and so on
 ```
 
  This form adds the following functions:
