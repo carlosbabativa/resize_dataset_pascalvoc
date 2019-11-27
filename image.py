@@ -12,46 +12,49 @@ def process_image(file_path, output_path, w, h, save_box_images,do_crop,do_sub_c
     (base_dir, file_name, ext) = get_file_name(file_path)
     image_path = '{}/{}.{}'.format(base_dir, file_name, ext)
     xml = '{}/{}.xml'.format(base_dir, file_name)
-    if do_crop:
-        try:
-            crop(
-                image_path,
-                xml,
-                output_path,
-                out_w,
-                out_h,
-                do_sub_crop,
-                save_box_images=save_box_images,
-            )
-        except Exception as e:
-            traceback.print_exc()
-            print('{}_____{}'.format(image_path,e))
-    elif do_sub_crop:
-        try:
-            subcrop(
-                image_path,
-                xml,
-                output_path,
-                w,
-                h,
-                do_sub_crop,
-                save_box_images=save_box_images,
-            )
-        except Exception as e:
-            traceback.print_exc()
-            print('{}_____{}'.format(image_path,e))
+    if os.path.exists(xml):
+        if do_crop:
+            try:
+                crop(
+                    image_path,
+                    xml,
+                    output_path,
+                    out_w,
+                    out_h,
+                    do_sub_crop,
+                    save_box_images=save_box_images,
+                )
+            except Exception as e:
+                traceback.print_exc()
+                print('{}_____{}'.format(image_path,e))
+        elif do_sub_crop:
+            try:
+                subcrop(
+                    image_path,
+                    xml,
+                    output_path,
+                    w,
+                    h,
+                    do_sub_crop,
+                    save_box_images=save_box_images,
+                )
+            except Exception as e:
+                traceback.print_exc()
+                print('{}_____{}'.format(image_path,e))
+        else:
+            try:
+                resize(
+                    image_path,
+                    xml,
+                    tuple(int(dim) for dim in (x, y)),
+                    output_path,
+                    save_box_images=save_box_images
+                )
+            except Exception as e:
+                print('[ERROR] error with {}\n file: {}'.format(image_path, e))
+                print('--------------------------------------------------')
     else:
-        try:
-            resize(
-                image_path,
-                xml,
-                tuple(int(dim) for dim in (x, y)),
-                output_path,
-                save_box_images=save_box_images
-            )
-        except Exception as e:
-            print('[ERROR] error with {}\n file: {}'.format(image_path, e))
-            print('--------------------------------------------------')
+        print('No XML found for {}'.format(image_path))
     
     
         

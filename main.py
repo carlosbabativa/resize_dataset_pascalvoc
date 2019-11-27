@@ -81,11 +81,13 @@ IMAGE_FORMATS = ('.jpeg', '.JPEG', '.png', '.PNG', '.jpg', '.JPG')
 args = parser.parse_args()
 
 args.dataset_path += '/data_train'
+args.output_path += '/data_train'
 create_path(args.output_path)
 create_path(''.join([args.output_path, '/boxes_images']))
 
 args.dataset_path = add_end_slash(args.dataset_path)
 args.output_path = add_end_slash(args.output_path)
+assert os.path.exists(args.dataset_path), 'All data (images and annotations) should be within a folder named \'data_train\''
 
 for root, _, files in os.walk(args.dataset_path):
         output_path = os.path.join(args.output_path, root[len(args.dataset_path):])
