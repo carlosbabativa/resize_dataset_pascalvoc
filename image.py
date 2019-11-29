@@ -19,15 +19,15 @@ def process_image(file_path, output_path, w, h, save_box_images,do_crop,do_sub_c
                     image_path,
                     xml,
                     output_path,
-                    out_w,
-                    out_h,
-                    do_sub_crop,
+                    w,
+                    h,
+                    do_crop,
                     save_box_images=save_box_images,
                 )
             except Exception as e:
                 traceback.print_exc()
                 print('{}_____{}'.format(image_path,e))
-        elif do_sub_crop:
+        elif do_sub_crop is not None:
             try:
                 subcrop(
                     image_path,
@@ -46,7 +46,7 @@ def process_image(file_path, output_path, w, h, save_box_images,do_crop,do_sub_c
                 resize(
                     image_path,
                     xml,
-                    tuple(int(dim) for dim in (x, y)),
+                    tuple(int(dim) for dim in (w, h)),
                     output_path,
                     save_box_images=save_box_images
                 )
@@ -118,6 +118,8 @@ def resize(image_path,
     if int(save_box_images):
         save_path = '{}/boxes_images/boxed_{}'.format(output_path, ''.join([file_name, '.', ext]))
         draw_box(newBoxes, image, save_path)
+
+# _________________________________CUSTOM___________________________________________________________________
 
 def subcrop(image_path,
            xml_path,
@@ -208,17 +210,20 @@ def subcrop(image_path,
         cnt_boxes = len(newBoxes)
         # if cnt_boxes != old_boxes_cnt:
         #     print('keeping only {} out of {} for {}'.format(cnt_boxes,old_boxes_cnt,image_name))
-        if cnt_boxes > 0:
+        if do_sub_crop == 'all' or (do_sub_crop == 'object' and cnt_boxes > 0):
             # (_, file_name, ext) = get_file_name(image_path)
             cv2.imwrite(os.path.join(output_path, '.'.join([sub_name, image_ext])), image)
+            
+        if do_sub_crop == 'object': #and cnt_boxes != old_boxes_cnt:            
+            # print('keeping only {} out of {} for {}'.format(cnt_boxes,old_boxes_cnt,image_name))
             tree = ET.ElementTree(xmlRoot_sub)
             tree.write('{}/{}.xml'.format(output_path, sub_name))
-        if int(save_box_images and cnt_boxes > 0):
+
+        if do_sub_crop == 'all' and save_box_images or (do_sub_crop == 'object' and save_box_images and cnt_boxes > 0):
             save_path = '{}/boxes_images/boxed_{}'.format(output_path, ''.join([sub_name, '.', image_ext]))
             draw_box(newBoxes, image, save_path)
 
 
-# _________________________________CUSTOM___________________________________________________________________
 def crop(image_path,
            xml_path,
            output_path,
@@ -300,13 +305,15 @@ def crop(image_path,
             xmlRoot.remove(object_node) # Object would sit outside of cropped section. Delete Box
 
     cnt_boxes = len(newBoxes)
-    if cnt_boxes != old_boxes_cnt:
-        print('keeping only {} out of {} for {}'.format(cnt_boxes,old_boxes_cnt,image_name))
-    if cnt_boxes > 0:
+    if do_sub_crop == 'all' or (do_sub_crop == 'object' and cnt_boxes > 0):
         (_, file_name, ext) = get_file_name(image_path)
         cv2.imwrite(os.path.join(output_path, '.'.join([file_name, ext])), image)
+    
+    if do_sub_crop == 'object' and cnt_boxes != old_boxes_cnt:
+        print('keeping only {} out of {} for {}'.format(cnt_boxes,old_boxes_cnt,image_name))
         tree = ET.ElementTree(xmlRoot)
         tree.write('{}/{}.xml'.format(output_path, file_name, ext))
+
     if int(save_box_images and cnt_boxes > 0):
         save_path = '{}/boxes_images/boxed_{}'.format(output_path, ''.join([file_name, '.', ext]))
         draw_box(newBoxes, image, save_path)

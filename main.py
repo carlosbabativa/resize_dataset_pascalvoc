@@ -52,7 +52,7 @@ parser.add_argument(
     '-c',
     '--do_crop',
     dest='do_crop',
-    help='If True, it will crop',
+    help='[all] will return all subcrops, [object] will return only subcrops with objects within it',
     default=0
 )
 parser.add_argument(
@@ -60,7 +60,7 @@ parser.add_argument(
     '--do_sub_crop',
     dest='do_sub_crop',
     help='If True, it will sub-crop',
-    default=0
+    default=None
 )
 # parser.add_argument(
 #     '-z',
