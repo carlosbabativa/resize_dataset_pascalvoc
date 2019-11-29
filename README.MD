@@ -36,7 +36,7 @@ darkflow
 
 If running within darkflow fork, you can run 
 ```
-python resize_dataset_pascalvoc/main.py -p {yout_dataset_folder_name} --output {your_dataset_output_folder} --new_w 480 --new_h 640 --save_box_images 1 --do_sub_crop 1
+python resize_dataset_pascalvoc/main.py -p {yout_dataset_folder_name} --output {your_dataset_output_folder} --new_w 480 --new_h 640 --save_box_images 1 --do_sub_crop [all|object]
 ```
 Note that the dataset folder name does not need to be a path to darkflow/data/{dataset_name}, instead, only the name of the dataset is required
 Same requirements apply for output dataset, which will appear alongside all other datasets
