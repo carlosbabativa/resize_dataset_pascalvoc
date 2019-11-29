@@ -28,7 +28,7 @@ parser.add_argument(
     required=True
 )
 parser.add_argument(
-    '-w',
+    '-ww',
     '--new_w',
     dest='w',
     help='The new x images size',

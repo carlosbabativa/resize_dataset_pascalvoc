@@ -138,8 +138,8 @@ def subcrop(image_path,
     subs_cnt = h_times * w_times
     sub_imgs = {}
 
-    for r in range(h_times-1):
-        for c in range(w_times-1):
+    for r in range(h_times):
+        for c in range(w_times):
             sub_hi, sub_hf = ( h_marg + r*out_h, h_marg + (r+1)*out_h )
             sub_wi, sub_wf = ( w_marg + c*out_w, w_marg + (c+1)*out_w )
             sub_id = w_times*r + c+1
@@ -208,13 +208,14 @@ def subcrop(image_path,
                 xmlRoot_sub.remove(object_node) # Object would sit outside of cropped section. Delete Box
 
         cnt_boxes = len(newBoxes)
+        assert True
         # if cnt_boxes != old_boxes_cnt:
         #     print('keeping only {} out of {} for {}'.format(cnt_boxes,old_boxes_cnt,image_name))
         if do_sub_crop == 'all' or (do_sub_crop == 'object' and cnt_boxes > 0):
             # (_, file_name, ext) = get_file_name(image_path)
             cv2.imwrite(os.path.join(output_path, '.'.join([sub_name, image_ext])), image)
             
-        if do_sub_crop == 'object': #and cnt_boxes != old_boxes_cnt:            
+        if cnt_boxes > 0: #and cnt_boxes != old_boxes_cnt:            
             # print('keeping only {} out of {} for {}'.format(cnt_boxes,old_boxes_cnt,image_name))
             tree = ET.ElementTree(xmlRoot_sub)
             tree.write('{}/{}.xml'.format(output_path, sub_name))
